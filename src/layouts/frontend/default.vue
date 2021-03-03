@@ -2,6 +2,7 @@
   <div>
     <router-view/>
     <app-footer/>
+    <p>asdasd</p>
   </div>
 </template>
 
