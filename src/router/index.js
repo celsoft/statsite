@@ -15,10 +15,13 @@ export default new Router({
                 layout: 'frontend/default'
             }
         },
-        /*{
+        {
             path: '/login',
-            component: Login,
-        },*/
+            component: () => import('../components/frontend/LoginPage'),
+            meta: {
+                layout: 'frontend/Auth'
+            }
+        },
         {
             path: '*',
             meta: {

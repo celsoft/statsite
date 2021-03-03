@@ -10,8 +10,11 @@ Vue.use(VueMeta, {
   refreshOnceOnNavigation: true
 })
 
-import Argon from 'vue-argon-theme'
+import Argon from '@/plugins/argon-kit'
 Vue.use(Argon);
+
+// eslint-disable-next-line no-unused-vars
+import config from './config.js'
 
 new Vue({
   router,
