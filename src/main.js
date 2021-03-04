@@ -16,7 +16,10 @@ Vue.use(Argon);
 // eslint-disable-next-line no-unused-vars
 import config from './config.js'
 
+import i18n from './i18n'
+
 new Vue({
   router,
-  render: h => h(App),
+  i18n,
+  render: h => h(App)
 }).$mount('#app')

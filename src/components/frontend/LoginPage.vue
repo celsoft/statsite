@@ -24,11 +24,13 @@
 
               <form role="form">
                 <base-input alternative
+                            required
                             class="mb-3"
                             placeholder="Email"
                             addon-left-icon="ni ni-email-83">
                 </base-input>
                 <base-input alternative
+                            required
                             type="password"
                             placeholder="Password"
                             addon-left-icon="ni ni-lock-circle-open">
