@@ -14,7 +14,7 @@ import Argon from '@/plugins/argon-kit'
 Vue.use(Argon);
 
 // eslint-disable-next-line no-unused-vars
-import config from './config.js'
+import config from './config/app'
 
 import i18n from './i18n'
 

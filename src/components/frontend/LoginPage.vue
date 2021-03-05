@@ -17,11 +17,14 @@
         <div class="col-lg-5">
           <card type="secondary" shadow header-classes="bg-white pb-5" body-classes="px-lg-5 py-lg-5" class="border-0">
             <template>
+              <div class="locale-changer">
+                <locale-changer />
+              </div>
               <div class="text-center text-muted mb-4">
                 <h3>Log in to {{appName}}</h3>
                 <small>Enter your email and password</small>
               </div>
-
+              <p>{{ $t('message') }}</p>
               <form role="form">
                 <base-input alternative
                             required
@@ -66,8 +69,10 @@
   </section>
 </template>
 <script>
+import LocaleChanger from "@/layouts/frontend/LocaleChanger";
 export default {
   name: 'LoginPage',
+  components: {LocaleChanger},
   data() {
     return {
       appName: this.$appName
@@ -79,6 +84,12 @@ export default {
 }
 </script>
 <style>
+.locale-changer {
+  position: absolute !important;
+  top: 15px !important;
+  right: 15px !important;
+  left: unset !important;
+}
 .section-auth { height: 100vh; }
 .btn-auth { margin-bottom: 0 !important; }
 </style>
