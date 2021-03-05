@@ -38,7 +38,7 @@ export default {
   data() {
     return {
       cbId: "",
-      touched: false
+      touched: false,
     };
   },
   computed: {
@@ -54,9 +54,11 @@ export default {
       }
     },
     inlineClass() {
+      let value;
       if (this.inline) {
-        return `form-check-inline`;
+        value = `form-check-inline`;
       }
+      return value
     }
   },
   mounted() {

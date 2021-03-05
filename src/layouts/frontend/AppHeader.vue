@@ -32,10 +32,10 @@
         </li>
         <li class="nav-item d-none d-lg-block ml-lg-4">
           <router-link to="/login" class="btn btn-outline-secondary btn-login">
-            <span class="nav-link-inner--text">{{ $t('header.link.login') }}</span>
+            <span class="nav-link-inner--text">{{ $t('header.links.login') }}</span>
           </router-link>
           <router-link to="/register" class="btn btn-neutral">
-            <span class="nav-link-inner--text">{{ $t('header.link.register') }}</span>
+            <span class="nav-link-inner--text">{{ $t('header.links.register') }}</span>
           </router-link>
         </li>
       </ul>

@@ -1,5 +1,9 @@
 {
-  "header.link.login": "Log in",
-  "header.link.register": "Sign up",
+  "header": {
+    "links": {
+      "login": "Log in",
+      "register": "Sign up"
+    }
+  },
   "message": "hello i18n !!"
 }

@@ -1,5 +1,9 @@
 {
-  "header.link.login": "Вход",
-  "header.link.register": "Регистрация",
+  "header": {
+    "links": {
+      "login": "Вход",
+      "register": "Регистрация"
+    }
+  },
   "message": "привет i18n !!"
 }
