@@ -37,7 +37,8 @@
     "sass-loader": "^7.1.0",
     "vue-cli-plugin-i18n": "^2.0.0",
     "vue-meta": "^2.4.0",
-    "vue-template-compiler": "^2.6.11"
+    "vue-template-compiler": "^2.6.11",
+    "vuex": "^3.6.2"
   },
   "eslintConfig": {
     "root": true,

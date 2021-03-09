@@ -25,21 +25,23 @@
                 <small>Enter your email and password</small>
               </div>
               <p>{{ $t('message') }}</p>
-              <form role="form">
+              <form @submit.prevent="login">
                 <base-input alternative
                             required
+                            v-model="email"
                             class="mb-3"
                             placeholder="Email"
                             addon-left-icon="ni ni-email-83">
                 </base-input>
                 <base-input alternative
                             required
+                            v-model="password"
                             type="password"
                             placeholder="Password"
                             addon-left-icon="ni ni-lock-circle-open">
                 </base-input>
                 <div class="text-center">
-                  <base-button type="primary" class="my-4 btn-auth">Sign In</base-button>
+                  <base-button nativeType="submit" type="primary" class="my-4 btn-auth">Sign In</base-button>
                 </div>
               </form>
             </template>
@@ -75,7 +77,18 @@ export default {
   components: {LocaleChanger},
   data() {
     return {
-      appName: this.$appName
+      appName: this.$appName,
+      email : "",
+      password : ""
+    }
+  },
+  methods: {
+    login: function () {
+      let email = this.email
+      let password = this.password
+      this.$store.dispatch('login', { email, password })
+          .then(() => this.$router.push('/'))
+          .catch(err => console.log(err.response.data))
     }
   },
   metaInfo: {
