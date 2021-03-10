@@ -1,29 +1,33 @@
-// eslint-disable-next-line no-unused-vars
-import config from './config/app'
+import {config} from './config/app'
 import Vue from 'vue'
 import App from './App.vue'
+import i18n from './i18n'
 import router from './router'
-
 import store from './store'
-import Axios from 'axios'
-Vue.prototype.$http = Axios;
-const token = localStorage.getItem('token')
-if (token) {
-  Vue.prototype.$http.defaults.headers.common['Authorization'] = token
-}
+import VueMeta from 'vue-meta'
+import Argon from '@/plugins/argon-kit'
+import LoadScript from 'vue-plugin-load-script';
 
 Vue.config.productionTip = false
 
-import VueMeta from 'vue-meta'
+Vue.prototype.appConfig = config
+
+const token = localStorage.getItem('token')
+if (token) {
+  Vue.prototype.$http.defaults.headers.common['Authorization'] = 'Bearer ' + token
+}
+
+Vue.prototype.$http.defaults.baseURL = 'https://' + Vue.prototype.appConfig.apiHost + '/' + Vue.prototype.appConfig.apiVersion;
+Vue.prototype.$http.defaults.headers.common['Accept-Language'] = i18n.locale;
+document.querySelector('html').setAttribute('lang', i18n.locale)
 
 Vue.use(VueMeta, {
   refreshOnceOnNavigation: true
 })
 
-import Argon from '@/plugins/argon-kit'
 Vue.use(Argon);
 
-import i18n from './i18n'
+Vue.use(LoadScript);
 
 new Vue({
   router,

@@ -1,4 +1,25 @@
 {
+  "form": {
+    "auth": {
+      "button": {
+        "login": "Log in",
+        "register": "Create Account"
+      },
+      "description": "Enter your email and password",
+      "input": {
+        "placeholder": {
+          "email": "Email",
+          "password": "Password"
+        }
+      },
+      "links": {
+        "backsite": "Go to {appName}",
+        "forgot": "Forgot password?",
+        "register": "Create new account"
+      },
+      "title": "Log in to {appName}"
+    }
+  },
   "header": {
     "links": {
       "login": "Log in",

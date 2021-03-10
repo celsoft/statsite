@@ -17,51 +17,57 @@
         <div class="col-lg-5">
           <card type="secondary" shadow header-classes="bg-white pb-5" body-classes="px-lg-5 py-lg-5" class="border-0">
             <template>
+              <form-loading-indicator v-if="loading"/>
               <div class="locale-changer">
-                <locale-changer />
+                <locale-changer/>
               </div>
               <div class="text-center text-muted mb-4">
-                <h3>Log in to {{appName}}</h3>
-                <small>Enter your email and password</small>
+                <h3>{{ $t('form.auth.title', {appName: appName}) }}</h3>
+                <small>{{ $t('form.auth.description') }}</small>
               </div>
-              <p>{{ $t('message') }}</p>
+              <base-alert type="danger" v-if="errors.length > 0">
+                <div v-for="error in errors" :key="errors.indexOf(error)">{{ error }}</div>
+              </base-alert>
               <form @submit.prevent="login">
                 <base-input alternative
                             required
                             v-model="email"
                             class="mb-3"
-                            placeholder="Email"
+                            :placeholder="$t('form.auth.input.placeholder.email')"
                             addon-left-icon="ni ni-email-83">
                 </base-input>
                 <base-input alternative
                             required
                             v-model="password"
                             type="password"
-                            placeholder="Password"
+                            :placeholder="$t('form.auth.input.placeholder.password')"
                             addon-left-icon="ni ni-lock-circle-open">
                 </base-input>
                 <div class="text-center">
-                  <base-button nativeType="submit" type="primary" class="my-4 btn-auth">Sign In</base-button>
+                  <base-button nativeType="submit" type="primary" class="my-4 btn-auth">{{
+                      $t('form.auth.button.login')
+                    }}
+                  </base-button>
                 </div>
               </form>
             </template>
           </card>
           <div class="row mt-3">
             <div class="col-6">
-              <a href="#" class="text-light">
-                <small>Forgot password?</small>
-              </a>
+              <router-link to="#" class="text-light">
+                <small>{{ $t('form.auth.links.forgot') }}</small>
+              </router-link>
             </div>
             <div class="col-6 text-right">
-              <a href="#" class="text-light">
-                <small>Create new account</small>
-              </a>
+              <router-link to="#" class="text-light">
+                <small>{{ $t('form.auth.links.register') }}</small>
+              </router-link>
             </div>
           </div>
           <div class="row mt-3">
             <div class="col-12 text-center">
               <router-link to="/" class="text-light">
-                <small>&larr; Go to {{appName}}</small>
+                <small>&larr; {{ $t('form.auth.links.backsite', {appName: appName}) }}</small>
               </router-link>
             </div>
           </div>
@@ -71,28 +77,62 @@
   </section>
 </template>
 <script>
+import Vue from "vue";
 import LocaleChanger from "@/layouts/frontend/LocaleChanger";
+import FormLoadingIndicator from "@/components/FormLoadingIndicator";
+import {VueReCaptcha} from "vue-recaptcha-v3";
+
+Vue.use(VueReCaptcha, {siteKey: Vue.prototype.appConfig.recaptchaSiteKey});
+
 export default {
   name: 'LoginPage',
-  components: {LocaleChanger},
+  components: {FormLoadingIndicator, LocaleChanger},
   data() {
     return {
-      appName: this.$appName,
-      email : "",
-      password : ""
+      appName: this.appConfig.appName,
+      email: '',
+      password: '',
+      loading: false,
+      errors: [],
+      recaptchaSiteKey: this.appConfig.recaptchaSiteKey,
     }
   },
   methods: {
     login: function () {
       let email = this.email
       let password = this.password
-      this.$store.dispatch('login', { email, password })
-          .then(() => this.$router.push('/'))
-          .catch(err => console.log(err.response.data))
+      this.errors = [];
+      this.loading = true;
+      this.$recaptchaLoaded().then(() => {
+        this.$recaptcha('login').then((recaptchaToken) => {
+          this.$store.dispatch('login', {email, password, recaptchaToken})
+              .then(() => this.$router.push('/'))
+              .catch(error => {
+                this.loading = false;
+                if (error.response.status === 422) {
+                  error.response.data.forEach((error) => {
+                    this.errors.push(error.message)
+                  })
+                } else {
+                  this.errors.push('Something went wrong, please refresh the page and try again. Or contact us by contacts.');
+                }
+              })
+        })
+            .catch(() => {
+              this.loading = false;
+              this.errors.push('Something went wrong, please refresh the page and try again. Or contact us by contacts.');
+            })
+      })
+          .catch(() => {
+            this.loading = false;
+            this.errors.push('Something went wrong, please refresh the page and try again. Or contact us by contacts.');
+          })
     }
   },
-  metaInfo: {
-    title: 'Login page',
+  metaInfo() {
+    return {
+      title: this.$t('form.auth.title', {appName: this.appName})
+    }
   }
 }
 </script>
@@ -103,6 +143,12 @@ export default {
   right: 15px !important;
   left: unset !important;
 }
-.section-auth { height: 100vh; }
-.btn-auth { margin-bottom: 0 !important; }
+
+.section-auth {
+  height: 100vh;
+}
+
+.btn-auth {
+  margin-bottom: 0 !important;
+}
 </style>

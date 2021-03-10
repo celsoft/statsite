@@ -1,41 +1,48 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
 import axios from 'axios'
+import qs from 'qs';
 import Axios from "axios";
 
 Vue.use(Vuex)
 
 Vue.prototype.$http = Axios;
-Vue.prototype.$http.defaults.baseURL = 'https://' + Vue.prototype.$apiHost + '/' + Vue.prototype.$apiVersion;
 
 export default new Vuex.Store({
     state: {
         status: '',
         token: localStorage.getItem('token') || '',
-        user : {}
+        user: {}
     },
     mutations: {
-        auth_request(state){
+        auth_request(state) {
             state.status = 'loading'
         },
-        auth_success(state, token, user){
+        auth_success(state, token, user) {
             state.status = 'success'
             state.token = token
             state.user = user
         },
-        auth_error(state){
+        auth_error(state) {
             state.status = 'error'
         },
-        logout(state){
+        logout(state) {
             state.status = ''
             state.token = ''
         },
     },
     actions: {
-        login({commit}, user){
+        login({commit}, user) {
             return new Promise((resolve, reject) => {
                 commit('auth_request')
-                axios({url: '/user/login', data: user, method: 'POST' })
+                axios({
+                    url: '/user/login',
+                    data: qs.stringify(user),
+                    method: 'POST',
+                    headers: {
+                        'content-type': 'application/x-www-form-urlencoded'
+                    }
+                })
                     .then(resp => {
                         const token = resp.data.token
                         const user = resp.data.user
@@ -52,10 +59,10 @@ export default new Vuex.Store({
                     })
             })
         },
-        register({commit}, user){
+        register({commit}, user) {
             return new Promise((resolve, reject) => {
                 commit('auth_request')
-                axios({url: 'http://localhost:3000/register', data: user, method: 'POST' })
+                axios({url: 'http://localhost:3000/register', data: user, method: 'POST'})
                     .then(resp => {
                         const token = resp.data.token
                         const user = resp.data.user
@@ -72,7 +79,7 @@ export default new Vuex.Store({
                     })
             })
         },
-        logout({commit}){
+        logout({commit}) {
             return new Promise((resolve) => {
                 commit('logout')
                 localStorage.removeItem('token')
@@ -81,7 +88,7 @@ export default new Vuex.Store({
             })
         }
     },
-    getters : {
+    getters: {
         isLoggedIn: state => !!state.token,
         authStatus: state => state.status,
     }

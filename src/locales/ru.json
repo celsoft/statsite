@@ -1,4 +1,25 @@
 {
+  "form": {
+    "auth": {
+      "button": {
+        "login": "Войти",
+        "register": "Зарегистрироваться"
+      },
+      "description": "Введите свой адрес электронной почты и пароль",
+      "input": {
+        "placeholder": {
+          "email": "Электронная почта",
+          "password": "Пароль"
+        }
+      },
+      "links": {
+        "backsite": "Перейти на {appName}",
+        "forgot": "Забыли пароль?",
+        "register": "Создать новый аккаунт"
+      },
+      "title": "Вход в {appName}"
+    }
+  },
   "header": {
     "links": {
       "login": "Вход",

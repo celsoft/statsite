@@ -43,6 +43,7 @@
 <script>
 import Vue from "vue";
 import supportedLocales from "@/config/supported-locales";
+import i18n from "@/i18n";
 
 Vue.component('lang-li', {
   props: ['visible'],
@@ -83,6 +84,8 @@ export default {
     setLocale(locale) {
       this.$i18n.locale = locale;
       localStorage.setItem("lang", locale);
+      this.$http.defaults.headers.common['Accept-Language'] = i18n.locale;
+      document.querySelector('html').setAttribute('lang', i18n.locale)
       this.hideDropdown();
     }
   }
