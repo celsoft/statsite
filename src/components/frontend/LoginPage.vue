@@ -102,7 +102,7 @@ export default {
   },
   methods: {
     transformLinks: function (string) {
-      const linkExpr = /\[\[(.*?)\]\]/gi;
+      const linkExpr = /\[\[(.*?)]]/gi;
       const linkValueExpr = /(\s+\|\s+)/;
       return string.replace(linkExpr, (expr, value) => {
         const parts = value.split(linkValueExpr);
