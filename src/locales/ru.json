@@ -18,6 +18,14 @@
         "register": "Создать новый аккаунт"
       },
       "title": "Вход в {appName}"
+    },
+    "global": {
+      "error": {
+        "message": "Что-то пошло не так, обновите страницу и попробуйте еще раз. Или свяжитесь с нами по контактам."
+      }
+    },
+    "recaptcha": {
+      "message": "Этот сайт защищен reCAPTCHA, и применяются [[https://policies.google.com/privacy | Политика конфиденциальности]] и [[https://policies.google.com/terms | Условия обслуживания]] Google."
     }
   },
   "header": {

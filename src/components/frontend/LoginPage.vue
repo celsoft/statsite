@@ -44,7 +44,7 @@
                             addon-left-icon="ni ni-lock-circle-open">
                 </base-input>
                 <div class="text-center text-muted">
-                  <small>This site is protected by reCAPTCHA and the Google <a href="https://policies.google.com/privacy">Privacy Policy</a> and <a href="https://policies.google.com/terms">Terms of Service</a> apply.</small>
+                  <small v-html="transformLinks($t('form.recaptcha.message'))"></small>
                 </div>
                 <div class="text-center">
                   <base-button nativeType="submit" type="primary" class="my-4 btn-auth">{{
@@ -101,6 +101,14 @@ export default {
     }
   },
   methods: {
+    transformLinks: function (string) {
+      const linkExpr = /\[\[(.*?)\]\]/gi;
+      const linkValueExpr = /(\s+\|\s+)/;
+      return string.replace(linkExpr, (expr, value) => {
+        const parts = value.split(linkValueExpr);
+        return `<a href="${parts[0]}" target="_blank">${parts[2]}</a>`;
+      });
+    },
     login: function () {
       let email = this.email
       let password = this.password
@@ -112,23 +120,27 @@ export default {
               .then(() => this.$router.push('/'))
               .catch(error => {
                 this.loading = false;
+                if ( !error || !error.response || !error.response.status || !error.response.data ){
+                  this.errors.push(this.$t('form.global.error.message'));
+                  return
+                }
                 if (error.response.status === 422) {
                   error.response.data.forEach((error) => {
                     this.errors.push(error.message)
                   })
                 } else {
-                  this.errors.push('Something went wrong, please refresh the page and try again. Or contact us by contacts.');
+                  this.errors.push(this.$t('form.global.error.message'));
                 }
               })
         })
             .catch(() => {
               this.loading = false;
-              this.errors.push('Something went wrong, please refresh the page and try again. Or contact us by contacts.');
+              this.errors.push(this.$t('form.global.error.message'));
             })
       })
           .catch(() => {
             this.loading = false;
-            this.errors.push('Something went wrong, please refresh the page and try again. Or contact us by contacts.');
+            this.errors.push(this.$t('form.global.error.message'));
           })
     }
   },

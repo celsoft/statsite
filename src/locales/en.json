@@ -18,6 +18,14 @@
         "register": "Create new account"
       },
       "title": "Log in to {appName}"
+    },
+    "global": {
+      "error": {
+        "message": "Something went wrong, please refresh the page and try again. Or contact us by contacts."
+      }
+    },
+    "recaptcha": {
+      "message": "This site is protected by reCAPTCHA and the Google [[https://policies.google.com/privacy | Privacy Policy]] and [[https://policies.google.com/terms | Terms of Service]] apply."
     }
   },
   "header": {
