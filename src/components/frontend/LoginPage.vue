@@ -43,6 +43,9 @@
                             :placeholder="$t('form.auth.input.placeholder.password')"
                             addon-left-icon="ni ni-lock-circle-open">
                 </base-input>
+                <div class="text-center text-muted">
+                  <small>This site is protected by reCAPTCHA and the Google <a href="https://policies.google.com/privacy">Privacy Policy</a> and <a href="https://policies.google.com/terms">Terms of Service</a> apply.</small>
+                </div>
                 <div class="text-center">
                   <base-button nativeType="submit" type="primary" class="my-4 btn-auth">{{
                       $t('form.auth.button.login')
@@ -77,12 +80,8 @@
   </section>
 </template>
 <script>
-import Vue from "vue";
 import LocaleChanger from "@/layouts/frontend/LocaleChanger";
 import FormLoadingIndicator from "@/components/FormLoadingIndicator";
-import {VueReCaptcha} from "vue-recaptcha-v3";
-
-Vue.use(VueReCaptcha, {siteKey: Vue.prototype.appConfig.recaptchaSiteKey});
 
 export default {
   name: 'LoginPage',
@@ -94,7 +93,11 @@ export default {
       password: '',
       loading: false,
       errors: [],
-      recaptchaSiteKey: this.appConfig.recaptchaSiteKey,
+    }
+  },
+  beforeCreate() {
+    if ( this.$store.getters.isLoggedIn ){
+      this.$router.push('/')
     }
   },
   methods: {

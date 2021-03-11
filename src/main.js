@@ -7,9 +7,9 @@ import store from './store'
 import VueMeta from 'vue-meta'
 import Argon from '@/plugins/argon-kit'
 import LoadScript from 'vue-plugin-load-script';
+import {VueReCaptcha} from "vue-recaptcha-v3";
 
 Vue.config.productionTip = false
-
 Vue.prototype.appConfig = config
 
 const token = localStorage.getItem('token')
@@ -28,6 +28,13 @@ Vue.use(VueMeta, {
 Vue.use(Argon);
 
 Vue.use(LoadScript);
+
+Vue.use(VueReCaptcha, {
+  siteKey: Vue.prototype.appConfig.recaptchaSiteKey,
+  loaderOptions : {
+    autoHideBadge : true
+  }
+});
 
 new Vue({
   router,
