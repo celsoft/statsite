@@ -25,7 +25,7 @@ export default {
       opacity: 0.8
     }
   },
-  components: {Loading},
+  components: { Loading },
 }
 </script>
 <style>

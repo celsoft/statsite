@@ -7,5 +7,10 @@ module.exports = {
       enableInSFC: true
     }
   },
-  runtimeCompiler: true
+  runtimeCompiler: true,
+  chainWebpack: (config) => {
+    // Disable prefetching and preloading
+    config.plugins.delete('prefetch')
+    config.plugins.delete('preload')
+  }
 }

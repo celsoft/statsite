@@ -49,13 +49,8 @@ import CloseButton from "@/components/argon/CloseButton";
 import LocaleChanger from "@/layouts/frontend/LocaleChanger";
 
 export default {
-  components: {
-    BaseNav,
-    CloseButton,
-    BaseDropdown,
-    LocaleChanger
-  }
-};
+  components: { BaseNav, CloseButton, BaseDropdown, LocaleChanger }
+}
 </script>
 <style>
 .btn-login { color: #ffffff; }
